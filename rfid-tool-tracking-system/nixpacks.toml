@@ -1,11 +1,12 @@
-# Nixpacks config used by Railway to provision the Node.js environment.
-# Ensures pnpm is available in the build container.
+[variables]
+NIXPACKS_NODE_VERSION = "20"
 
 [phases.setup]
 nixPkgs = ["nodejs_20"]
+cmds = ["corepack enable", "corepack prepare pnpm@9 --activate"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@9", "pnpm install --frozen-lockfile"]
+cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
 cmds = ["pnpm --filter @workspace/api-server run build"]
